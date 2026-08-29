@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: code-intelligence-backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/codeintel}
+    username: ${SPRING_DATASOURCE_USERNAME:codeintel}
+    password: ${SPRING_DATASOURCE_PASSWORD:codeintel}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
