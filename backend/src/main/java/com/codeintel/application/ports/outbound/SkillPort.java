@@ -1,5 +1,8 @@
 package com.codeintel.application.ports.outbound;
 
+import com.codeintel.domain.skill.LoadedSkill;
+import com.codeintel.domain.skill.SkillLoadRequest;
+
 public interface SkillPort {
-    String loadPinnedPolicyRevision(String requestedRevision);
+    LoadedSkill load(SkillLoadRequest request);
 }

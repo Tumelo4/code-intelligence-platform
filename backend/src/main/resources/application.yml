@@ -5,6 +5,9 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/codeintel}
     username: ${SPRING_DATASOURCE_USERNAME:codeintel}
     password: ${SPRING_DATASOURCE_PASSWORD:codeintel}
+  sql:
+    init:
+      mode: always
 management:
   endpoints:
     web:
