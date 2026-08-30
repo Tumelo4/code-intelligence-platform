@@ -18,7 +18,7 @@ public final class ConnectRepository {
     public ValidatedRepositoryConnection execute(RepositoryConnection connection) {
         ValidatedRepositoryConnection validated = connectionPort.validate(
                 Objects.requireNonNull(connection, "connection must not be null"));
-        repositoryStore.save(validated);
+        repositoryStore.save(validated, connection);
         return validated;
     }
 }

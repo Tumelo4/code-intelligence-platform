@@ -17,9 +17,9 @@
 | REQ-REPO-002 | repository-connection.md, ADR-003 | TASK-REPO-003 | TEST-REPO-001–004 | milestone-03-2026-08-30.md |
 | REQ-REPO-003 | repository-connection.md, ADR-003 | TASK-REPO-005 | TEST-REPO-001, TEST-REPO-006 | milestone-03-2026-08-30.md |
 | REQ-REPO-004 | repository-connection.md, ADR-003 | TASK-REPO-005 | TEST-REPO-006–009 | milestone-03-2026-08-30.md |
-| REQ-ACQUIRE-001 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-005 | TEST-ACQUIRE-004 | Pending milestone verification |
-| REQ-ACQUIRE-002 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-005 | TEST-ACQUIRE-004 | Pending milestone verification |
-| REQ-ACQUIRE-003 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-005 | TEST-ACQUIRE-004 | Pending milestone verification |
-| REQ-ACQUIRE-004 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-004 | TEST-ACQUIRE-001–003 | Pending milestone verification |
-| REQ-ACQUIRE-005 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-006 | TEST-ACQUIRE-004 | Pending milestone verification |
-| REQ-SAFE-004 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-005 | TEST-ACQUIRE-004 | Pending milestone verification |
+| REQ-ACQUIRE-001 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-005, TASK-ACQUIRE-009 | TEST-ACQUIRE-004, TEST-ACQUIRE-008 | milestone-04-2026-08-30.md |
+| REQ-ACQUIRE-002 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-005, TASK-ACQUIRE-008 | TEST-ACQUIRE-004, TEST-ACQUIRE-007 | milestone-04-2026-08-30.md |
+| REQ-ACQUIRE-003 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-005 | TEST-ACQUIRE-004 | milestone-04-2026-08-30.md |
+| REQ-ACQUIRE-004 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-004, TASK-ACQUIRE-007 | TEST-ACQUIRE-001–006 | milestone-04-2026-08-30.md |
+| REQ-ACQUIRE-005 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-006–007 | TEST-ACQUIRE-004–006, TEST-ACQUIRE-009 | milestone-04-2026-08-30.md |
+| REQ-SAFE-004 | safe-acquisition.md, ADR-004 | TASK-ACQUIRE-005, TASK-ACQUIRE-007 | TEST-ACQUIRE-001–006 | milestone-04-2026-08-30.md |

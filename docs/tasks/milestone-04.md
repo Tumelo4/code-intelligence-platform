@@ -6,7 +6,7 @@
 - [x] TASK-ACQUIRE-004 — Implement bounded ZIP path, symlink, count, and expansion validation.
 - [x] TASK-ACQUIRE-005 — Implement exact-revision JGit bare transfer and direct blob materialization.
 - [x] TASK-ACQUIRE-006 — Create immutable original and writable working copies without Git metadata.
-- [ ] TASK-ACQUIRE-007 — Implement ZIP and local snapshot acquisition adapters.
-- [ ] TASK-ACQUIRE-008 — Connect persisted repository selections and scoped GitHub credentials.
-- [ ] TASK-ACQUIRE-009 — Persist acquisition revisions and expose acquisition status.
-- [ ] TASK-ACQUIRE-010 — Run end-to-end Compose verification and record evidence.
+- [x] TASK-ACQUIRE-007 — Implement ZIP and local snapshot acquisition adapters.
+- [x] TASK-ACQUIRE-008 — Connect persisted repository selections and scoped GitHub credentials.
+- [x] TASK-ACQUIRE-009 — Persist acquisition revisions and expose acquisition status.
+- [x] TASK-ACQUIRE-010 — Run end-to-end Compose verification and record evidence.

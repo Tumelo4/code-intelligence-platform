@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — implementation in progress.
+Verified.
 
 ## Goal
 
@@ -24,6 +24,6 @@ Acquire an exact repository revision without executing repository-controlled hoo
 - ZIP traversal, symlink, duplicate, count, and expansion attacks fail closed.
 - The original tree is read-only, the working copy is writable, and neither contains `.git` acquisition metadata.
 
-## Remaining Work
+## Verification
 
-Complete ZIP and local snapshot adapters, connect validated repository selections to acquisition, persist revision records, expose acquisition status, provide the production GitHub installation credential lease and network boundary, then run Compose verification.
+Milestone 4 verification is recorded in `docs/evidence/milestone-04-2026-08-30.md`. It covers bounded Git, ZIP, and local-snapshot acquisition; exact revision persistence; scoped GitHub installation credentials; credential-free API responses; immutable and writable tree separation; and restart-safe Compose storage.

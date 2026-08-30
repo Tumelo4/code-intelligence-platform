@@ -1,6 +1,8 @@
 package com.codeintel.infrastructure.acquisition;
 
-public final class AcquisitionSafetyException extends RuntimeException {
+import com.codeintel.application.acquisition.AcquisitionValidationException;
+
+public final class AcquisitionSafetyException extends AcquisitionValidationException {
     public AcquisitionSafetyException(String message) {
         super(message);
     }

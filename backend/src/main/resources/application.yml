@@ -18,6 +18,11 @@ management:
       probes:
         enabled: true
 repository:
+  acquisition:
+    workspace-root: ${REPOSITORY_ACQUISITION_ROOT:/tmp/code-intelligence-acquisitions}
+    maximum-files: ${REPOSITORY_ACQUISITION_MAXIMUM_FILES:100000}
+    maximum-expanded-bytes: ${REPOSITORY_ACQUISITION_MAXIMUM_BYTES:1073741824}
+    maximum-file-bytes: ${REPOSITORY_ACQUISITION_MAXIMUM_FILE_BYTES:104857600}
   connection:
     http-timeout: 10s
     public-allowed-hosts: github.com,gitlab.com,bitbucket.org

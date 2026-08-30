@@ -4,6 +4,7 @@ import com.codeintel.application.ports.outbound.RepositoryStore;
 import com.codeintel.application.repository.ConnectRepository;
 import com.codeintel.application.repository.GetRepositoryConnection;
 import com.codeintel.domain.repository.RepositoryId;
+import com.codeintel.domain.repository.RepositoryConnection;
 import com.codeintel.domain.repository.RepositorySourceType;
 import com.codeintel.domain.repository.ValidatedRepositoryConnection;
 import java.net.URI;
@@ -22,11 +23,15 @@ class RepositoryConnectionControllerTest {
                 new RepositoryId(id), RepositorySourceType.PUBLIC_GIT_URL,
                 "https://github.com/owner/repo.git", Instant.parse("2026-08-30T00:00:00Z"));
         RepositoryStore store = new RepositoryStore() {
-            public void save(ValidatedRepositoryConnection connection) {
+            public void save(ValidatedRepositoryConnection connection, RepositoryConnection source) {
             }
 
             public Optional<ValidatedRepositoryConnection> find(RepositoryId repositoryId) {
                 return Optional.of(validated);
+            }
+
+            public Optional<RepositoryConnection> findSource(RepositoryId repositoryId) {
+                return Optional.empty();
             }
         };
         RepositoryConnectionController controller = new RepositoryConnectionController(

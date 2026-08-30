@@ -6,7 +6,9 @@ COPY src src
 RUN mvn package
 
 FROM eclipse-temurin:21-jre-alpine
-RUN addgroup -S app && adduser -S app -G app
+RUN addgroup -S app && adduser -S app -G app \
+    && mkdir -p /tmp/code-intelligence-acquisitions /tmp/code-intelligence-uploads \
+    && chown -R app:app /tmp/code-intelligence-acquisitions /tmp/code-intelligence-uploads
 USER app
 WORKDIR /app
 COPY --from=build /workspace/target/code-intelligence-backend-*.jar app.jar
