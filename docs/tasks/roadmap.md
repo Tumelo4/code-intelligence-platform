@@ -7,7 +7,7 @@ Every milestone starts only after its feature spec is Approved and ends only aft
 | 1 | Architecture Foundation | Enforce layers; start backend, frontend, PostgreSQL | Verified |
 | 2 | Codebase Review Skill | Pin the mandatory skill SHA, load references, fail closed, persist metadata | Verified |
 | 3 | Repository Connection | Validate public Git URL, ZIP, local-dev, and GitHub App contracts | Verified |
-| 4 | Safe Acquisition | Acquire an exact commit into immutable original and disposable working copies | Queued |
+| 4 | Safe Acquisition | Acquire an exact commit into immutable original and disposable working copies | In progress |
 | 5 | Repository Inventory | Inventory Java/Maven structure without executing repository code | Queued |
 | 6 | Static Analysis | Produce normalized metrics and findings through `StaticAnalyzerPort` | Queued |
 | 7 | Git Intelligence | Compute history, ownership, churn, and coupling | Queued |
