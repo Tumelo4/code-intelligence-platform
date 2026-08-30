@@ -10,3 +10,12 @@ CREATE TABLE IF NOT EXISTS skill_run_provenance (
     CONSTRAINT skill_run_provenance_sha_format
         CHECK (commit_sha ~ '^[0-9a-f]{40}$')
 );
+
+CREATE TABLE IF NOT EXISTS repository_connection (
+    repository_id UUID PRIMARY KEY,
+    source_type TEXT NOT NULL,
+    safe_locator TEXT NOT NULL,
+    validated_at TIMESTAMPTZ NOT NULL,
+    CONSTRAINT repository_connection_source_type
+        CHECK (source_type IN ('GITHUB_APP', 'PUBLIC_GIT_URL', 'ZIP_UPLOAD', 'LOCAL_DEVELOPMENT_PATH'))
+);
