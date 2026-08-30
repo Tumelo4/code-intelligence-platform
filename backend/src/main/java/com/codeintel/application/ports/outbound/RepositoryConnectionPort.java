@@ -1,9 +1,8 @@
 package com.codeintel.application.ports.outbound;
 
-import com.codeintel.domain.repository.RepositoryId;
-
-import java.net.URI;
+import com.codeintel.domain.repository.RepositoryConnection;
+import com.codeintel.domain.repository.ValidatedRepositoryConnection;
 
 public interface RepositoryConnectionPort {
-    RepositoryId connectPublicRepository(URI repositoryUri);
+    ValidatedRepositoryConnection validate(RepositoryConnection connection);
 }

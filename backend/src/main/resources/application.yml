@@ -17,3 +17,12 @@ management:
     health:
       probes:
         enabled: true
+repository:
+  connection:
+    http-timeout: 10s
+    public-allowed-hosts: github.com,gitlab.com,bitbucket.org
+    github-app-id: ${GITHUB_APP_ID:0}
+    github-private-key: ${GITHUB_APP_PRIVATE_KEY:}
+    github-api: https://api.github.com
+    zip-staging-root: ${REPOSITORY_ZIP_STAGING_ROOT:/tmp/code-intelligence-uploads}
+    local-development-enabled: ${LOCAL_REPOSITORY_CONNECTIONS_ENABLED:false}

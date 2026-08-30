@@ -1,0 +1,33 @@
+package com.codeintel.presentation;
+
+import com.codeintel.application.repository.RepositoryConnectionNotFoundException;
+import com.codeintel.application.repository.RepositoryConnectionValidationException;
+import java.time.Instant;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class RepositoryConnectionExceptionHandler {
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ErrorResponse invalidInput(IllegalArgumentException exception) {
+        return new ErrorResponse("invalid_repository_connection", exception.getMessage(), Instant.now());
+    }
+
+    @ExceptionHandler(RepositoryConnectionValidationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    ErrorResponse accessDenied(RepositoryConnectionValidationException exception) {
+        return new ErrorResponse("repository_access_not_validated", exception.getMessage(), Instant.now());
+    }
+
+    @ExceptionHandler(RepositoryConnectionNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    ErrorResponse notFound(RepositoryConnectionNotFoundException exception) {
+        return new ErrorResponse("repository_connection_not_found", exception.getMessage(), Instant.now());
+    }
+
+    record ErrorResponse(String code, String message, Instant timestamp) {
+    }
+}
