@@ -33,7 +33,7 @@ public final class GitHubAppApiAccessProbe implements GitHubAppAccessProbe {
 
     @Override
     public boolean canRead(long installationId, GitHubRepository repository) {
-        String token = installationToken(installationId, repository);
+        String token = issueInstallationToken(installationId, repository);
         OutboundHttpClient.Response response = httpClient.exchange("GET",
                 apiBase.resolve("/repos/" + repository.owner() + "/" + repository.name()),
                 Map.of("Accept", ACCEPT, "Authorization", "Bearer " + token,
@@ -41,7 +41,7 @@ public final class GitHubAppApiAccessProbe implements GitHubAppAccessProbe {
         return response.statusCode() == 200;
     }
 
-    private String installationToken(long installationId, GitHubRepository repository) {
+    public String issueInstallationToken(long installationId, GitHubRepository repository) {
         OutboundHttpClient.Response response = httpClient.exchange("POST",
                 apiBase.resolve("/app/installations/" + installationId + "/access_tokens"),
                 Map.of("Accept", ACCEPT, "Authorization", "Bearer " + signedAppJwt(),

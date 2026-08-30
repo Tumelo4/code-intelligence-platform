@@ -23,6 +23,9 @@ services:
       SPRING_DATASOURCE_PASSWORD: codeintel
     ports:
       - "8080:8080"
+    volumes:
+      - acquisition-data:/tmp/code-intelligence-acquisitions
+      - upload-data:/tmp/code-intelligence-uploads
     depends_on:
       postgres:
         condition: service_healthy
@@ -50,3 +53,5 @@ services:
 
 volumes:
   postgres-data:
+  acquisition-data:
+  upload-data:

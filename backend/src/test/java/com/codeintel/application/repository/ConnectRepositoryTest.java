@@ -2,6 +2,7 @@ package com.codeintel.application.repository;
 
 import com.codeintel.application.ports.outbound.RepositoryStore;
 import com.codeintel.domain.repository.PublicGitConnection;
+import com.codeintel.domain.repository.RepositoryConnection;
 import com.codeintel.domain.repository.RepositoryId;
 import com.codeintel.domain.repository.RepositorySourceType;
 import com.codeintel.domain.repository.ValidatedRepositoryConnection;
@@ -24,11 +25,15 @@ class ConnectRepositoryTest {
                 request.safeLocator(), Instant.parse("2026-08-30T00:00:00Z"));
         AtomicReference<ValidatedRepositoryConnection> saved = new AtomicReference<>();
         RepositoryStore store = new RepositoryStore() {
-            public void save(ValidatedRepositoryConnection connection) {
+            public void save(ValidatedRepositoryConnection connection, RepositoryConnection source) {
                 saved.set(connection);
             }
 
             public Optional<ValidatedRepositoryConnection> find(RepositoryId repositoryId) {
+                return Optional.empty();
+            }
+
+            public Optional<RepositoryConnection> findSource(RepositoryId repositoryId) {
                 return Optional.empty();
             }
         };
