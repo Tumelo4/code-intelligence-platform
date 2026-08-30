@@ -1,8 +1,8 @@
 package com.codeintel.application.ports.outbound;
 
-import com.codeintel.domain.repository.RepositoryRevision;
-import java.nio.file.Path;
+import com.codeintel.domain.acquisition.AcquiredRepository;
+import com.codeintel.domain.acquisition.RepositoryAcquisitionRequest;
 
 public interface GitAcquisitionPort {
-    Path acquire(RepositoryRevision revision);
+    AcquiredRepository acquire(RepositoryAcquisitionRequest request);
 }
