@@ -23,6 +23,10 @@ repository:
     maximum-files: ${REPOSITORY_ACQUISITION_MAXIMUM_FILES:100000}
     maximum-expanded-bytes: ${REPOSITORY_ACQUISITION_MAXIMUM_BYTES:1073741824}
     maximum-file-bytes: ${REPOSITORY_ACQUISITION_MAXIMUM_FILE_BYTES:104857600}
+  inventory:
+    maximum-files: ${REPOSITORY_INVENTORY_MAXIMUM_FILES:100000}
+    maximum-modules: ${REPOSITORY_INVENTORY_MAXIMUM_MODULES:500}
+    maximum-pom-bytes: ${REPOSITORY_INVENTORY_MAXIMUM_POM_BYTES:2097152}
   connection:
     http-timeout: 10s
     public-allowed-hosts: github.com,gitlab.com,bitbucket.org

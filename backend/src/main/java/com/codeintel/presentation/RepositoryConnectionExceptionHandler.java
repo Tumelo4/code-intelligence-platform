@@ -4,6 +4,8 @@ import com.codeintel.application.repository.RepositoryConnectionNotFoundExceptio
 import com.codeintel.application.repository.RepositoryConnectionValidationException;
 import com.codeintel.application.acquisition.AcquisitionNotFoundException;
 import com.codeintel.application.acquisition.AcquisitionValidationException;
+import com.codeintel.application.inventory.InventoryNotFoundException;
+import com.codeintel.application.inventory.InventoryValidationException;
 import java.time.Instant;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,6 +42,18 @@ public class RepositoryConnectionExceptionHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     ErrorResponse acquisitionRejected(AcquisitionValidationException exception) {
         return new ErrorResponse("repository_acquisition_rejected", exception.getMessage(), Instant.now());
+    }
+
+    @ExceptionHandler(InventoryNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    ErrorResponse inventoryNotFound(InventoryNotFoundException exception) {
+        return new ErrorResponse("repository_inventory_not_found", exception.getMessage(), Instant.now());
+    }
+
+    @ExceptionHandler(InventoryValidationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    ErrorResponse inventoryRejected(InventoryValidationException exception) {
+        return new ErrorResponse("repository_inventory_rejected", exception.getMessage(), Instant.now());
     }
 
     record ErrorResponse(String code, String message, Instant timestamp) {
