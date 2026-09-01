@@ -9,7 +9,7 @@ Every milestone starts only after its feature spec is Approved and ends only aft
 | 3 | Repository Connection | Validate public Git URL, ZIP, local-dev, and GitHub App contracts | Verified |
 | 4 | Safe Acquisition | Acquire an exact commit into immutable original and disposable working copies | Verified |
 | 5 | Repository Inventory | Inventory Java/Maven structure without executing repository code | Verified |
-| 6 | Static Analysis | Produce normalized metrics and findings through `StaticAnalyzerPort` | Queued |
+| 6 | Static Analysis | Produce normalized metrics and findings through `StaticAnalyzerPort` | In progress |
 | 7 | Git Intelligence | Compute history, ownership, churn, and coupling | Queued |
 | 8 | Scoring | Calculate health, hotspots, priorities, and eligibility deterministically | Queued |
 | 9 | Analysis Dashboard | Expose and render findings, evidence, and prioritization | Queued |
