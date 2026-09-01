@@ -6,6 +6,8 @@ import com.codeintel.application.acquisition.AcquisitionNotFoundException;
 import com.codeintel.application.acquisition.AcquisitionValidationException;
 import com.codeintel.application.inventory.InventoryNotFoundException;
 import com.codeintel.application.inventory.InventoryValidationException;
+import com.codeintel.application.analysis.AnalysisNotFoundException;
+import com.codeintel.application.analysis.AnalysisValidationException;
 import java.time.Instant;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,6 +56,18 @@ public class RepositoryConnectionExceptionHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     ErrorResponse inventoryRejected(InventoryValidationException exception) {
         return new ErrorResponse("repository_inventory_rejected", exception.getMessage(), Instant.now());
+    }
+
+    @ExceptionHandler(AnalysisNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    ErrorResponse analysisNotFound(AnalysisNotFoundException exception) {
+        return new ErrorResponse("static_analysis_not_found", exception.getMessage(), Instant.now());
+    }
+
+    @ExceptionHandler(AnalysisValidationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    ErrorResponse analysisRejected(AnalysisValidationException exception) {
+        return new ErrorResponse("static_analysis_rejected", exception.getMessage(), Instant.now());
     }
 
     record ErrorResponse(String code, String message, Instant timestamp) {

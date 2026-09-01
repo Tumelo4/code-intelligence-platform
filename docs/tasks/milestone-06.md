@@ -6,6 +6,6 @@
 - [x] TASK-ANALYSIS-004 — Implement bounded Java source discovery from persisted inventory roots.
 - [x] TASK-ANALYSIS-005 — Implement deterministic file, class, and method metrics with line ranges.
 - [x] TASK-ANALYSIS-006 — Implement all seven threshold and duplication finding rules with stable IDs.
-- [ ] TASK-ANALYSIS-007 — Persist exact-revision analysis and expose a path-free API.
+- [x] TASK-ANALYSIS-007 — Persist exact-revision analysis and expose a path-free API.
 - [ ] TASK-ANALYSIS-008 — Test formulas, ranges, findings, determinism, safety, persistence, and API mapping.
 - [ ] TASK-ANALYSIS-009 — Run Java 21 Compose verification and record evidence.
