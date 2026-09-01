@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — implementation in progress.
+Verified.
 
 ## Problem
 
@@ -62,3 +62,7 @@ TEST-ANALYSIS-001 covers metric formulas and ranges. TEST-ANALYSIS-002 covers ea
 ## Definition of Done
 
 Requirements, tasks, tests, persistence, API, Java 21 verification, runtime evidence, and traceability are complete.
+
+## Verification
+
+Milestone 6 was verified on 2026-09-01. The Java 21 Compose build passed 53 tests, and live analysis produced 88 file reports and 20 deterministic findings for exact Git commit `5b5e38ee22f8557c686e7a8fbd0746c80d83910a`. The persisted report remained available after a backend restart. See `docs/evidence/milestone-06-2026-09-01.md`.

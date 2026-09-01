@@ -7,5 +7,5 @@
 - [x] TASK-ANALYSIS-005 — Implement deterministic file, class, and method metrics with line ranges.
 - [x] TASK-ANALYSIS-006 — Implement all seven threshold and duplication finding rules with stable IDs.
 - [x] TASK-ANALYSIS-007 — Persist exact-revision analysis and expose a path-free API.
-- [ ] TASK-ANALYSIS-008 — Test formulas, ranges, findings, determinism, safety, persistence, and API mapping.
-- [ ] TASK-ANALYSIS-009 — Run Java 21 Compose verification and record evidence.
+- [x] TASK-ANALYSIS-008 — Test formulas, ranges, findings, determinism, safety, persistence, and API mapping.
+- [x] TASK-ANALYSIS-009 — Run Java 21 Compose verification and record evidence.
