@@ -33,3 +33,9 @@
 | REQ-ANALYSIS-003 | static-analysis.md, ADR-006 | TASK-ANALYSIS-006 | TEST-ANALYSIS-002–003, TEST-ANALYSIS-007 | milestone-06-2026-09-01.md |
 | REQ-ANALYSIS-004 | static-analysis.md | TASK-ANALYSIS-003, TASK-ANALYSIS-006 | TEST-ANALYSIS-002–003 | milestone-06-2026-09-01.md |
 | REQ-ANALYSIS-005 | static-analysis.md, ADR-006 | TASK-ANALYSIS-007–009 | TEST-ANALYSIS-005–006, TEST-ANALYSIS-008 | milestone-06-2026-09-01.md |
+| REQ-GIT-001 | git-intelligence.md, ADR-007 | TASK-GIT-003–004 | TEST-GIT-001, TEST-GIT-007 | Pending Milestone 7 evidence |
+| REQ-GIT-002 | git-intelligence.md, ADR-007 | TASK-GIT-004–005 | TEST-GIT-001–002 | Pending Milestone 7 evidence |
+| REQ-GIT-003 | git-intelligence.md, ADR-007 | TASK-GIT-003, TASK-GIT-005 | TEST-GIT-002–003 | Pending Milestone 7 evidence |
+| REQ-GIT-004 | git-intelligence.md, ADR-007 | TASK-GIT-003, TASK-GIT-006 | TEST-GIT-004 | Pending Milestone 7 evidence |
+| REQ-GIT-005 | git-intelligence.md, ADR-007 | TASK-GIT-004, TASK-GIT-006, TASK-GIT-008 | TEST-GIT-004–005 | Pending Milestone 7 evidence |
+| REQ-GIT-006 | git-intelligence.md | TASK-GIT-007–009 | TEST-GIT-006, TEST-GIT-008 | Pending Milestone 7 evidence |
