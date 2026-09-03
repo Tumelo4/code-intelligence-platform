@@ -18,7 +18,7 @@ This milestone does not fetch missing history, score hotspots, interpret issue t
 
 ## Preconditions
 
-The latest persisted acquisition is a `GIT_COMMIT` revision and its immutable original contains the matching offline Git object database.
+The latest persisted acquisition is a `GIT_COMMIT` revision and its immutable acquisition bundle retains the matching read-only bare object database beside the metadata-free original tree.
 
 ## Functional Requirements
 

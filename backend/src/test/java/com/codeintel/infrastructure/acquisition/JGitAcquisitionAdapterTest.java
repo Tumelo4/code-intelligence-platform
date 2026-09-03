@@ -62,6 +62,12 @@ class JGitAcquisitionAdapterTest {
                 .isEqualTo("safe content");
         assertThat(Files.exists(acquired.immutableOriginal().resolve(".git"))).isFalse();
         assertThat(Files.exists(acquired.workingCopy().resolve(".git"))).isFalse();
+        assertThat(Files.isDirectory(acquired.immutableOriginal().resolveSibling("history.git"))).isTrue();
+        assertThat(Files.getPosixFilePermissions(
+                acquired.immutableOriginal().resolveSibling("history.git").resolve("config")))
+                .doesNotContain(java.nio.file.attribute.PosixFilePermission.OWNER_WRITE,
+                        java.nio.file.attribute.PosixFilePermission.GROUP_WRITE,
+                        java.nio.file.attribute.PosixFilePermission.OTHERS_WRITE);
         assertThat(Files.getPosixFilePermissions(acquired.immutableOriginal().resolve("README.md")))
                 .doesNotContain(java.nio.file.attribute.PosixFilePermission.OWNER_WRITE,
                         java.nio.file.attribute.PosixFilePermission.GROUP_WRITE,
