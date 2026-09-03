@@ -9,7 +9,7 @@ Every milestone starts only after its feature spec is Approved and ends only aft
 | 3 | Repository Connection | Validate public Git URL, ZIP, local-dev, and GitHub App contracts | Verified |
 | 4 | Safe Acquisition | Acquire an exact commit into immutable original and disposable working copies | Verified |
 | 5 | Repository Inventory | Inventory Java/Maven structure without executing repository code | Verified |
-| 6 | Static Analysis | Produce normalized metrics and findings through `StaticAnalyzerPort` | In progress |
+| 6 | Static Analysis | Produce normalized metrics and findings through `StaticAnalyzerPort` | Verified |
 | 7 | Git Intelligence | Compute history, ownership, churn, and coupling | Queued |
 | 8 | Scoring | Calculate health, hotspots, priorities, and eligibility deterministically | Queued |
 | 9 | Analysis Dashboard | Expose and render findings, evidence, and prioritization | Queued |
@@ -36,4 +36,4 @@ Every milestone starts only after its feature spec is Approved and ends only aft
 6. TASK-SKILL-006 — Test missing/invalid policy failure, SHA pinning, reference loading, and restart behavior.
 7. TASK-SKILL-007 — Run architecture/integration tests and store evidence before Milestone 3.
 
-Milestone 6 — Static Analysis — is next.
+Milestone 7 — Git Intelligence — is next.
