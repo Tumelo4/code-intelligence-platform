@@ -55,16 +55,16 @@ public final class JGitAcquisitionAdapter implements GitAcquisitionPort {
         if (!acquisitionRoot.startsWith(workspaceRoot)) {
             throw new AcquisitionSafetyException("acquisition workspace escaped configured root");
         }
-        Path metadata = acquisitionRoot.resolve("acquisition.git");
+        Path metadata = acquisitionRoot.resolve("history.git");
         Path original = acquisitionRoot.resolve("original");
         Path working = acquisitionRoot.resolve("working");
         try {
             Files.createDirectories(acquisitionRoot);
             cloneBare(source, metadata);
             MaterializedTree tree = materializeExactRevision(metadata, request.requestedRevision(), original);
-            deleteTree(metadata);
             copyTree(original, working);
             makeReadOnly(original);
+            makeReadOnly(metadata);
             return new AcquiredRepository(request.repositoryId(),
                     new AcquisitionRevision(AcquisitionRevision.Kind.GIT_COMMIT, tree.commitSha()),
                     request.requestedRevision(), original, working, tree.skippedSubmodules(), clock.instant());
