@@ -123,8 +123,9 @@ public final class JGitIntelligenceAdapter implements GitAnalysisPort {
         }
         files.sort(Comparator.comparing(FileChange::file));
         String authorId = authorId(commit);
-        GitCommit value = new GitCommit(commit.name(), Instant.ofEpochSecond(commit.getAuthorIdent().getWhenAsInstant().getEpochSecond()),
-                authorId, subject(commit.getShortMessage()), files.stream().map(FileChange::file).distinct().toList());
+        GitCommit value = new GitCommit(commit.name(),
+                Instant.ofEpochSecond(commit.getAuthorIdent().getWhenAsInstant().getEpochSecond()),
+                authorId, files.stream().map(FileChange::file).distinct().toList());
         return new CommitChange(value, files);
     }
 
@@ -198,11 +199,6 @@ public final class JGitIntelligenceAdapter implements GitAnalysisPort {
                 + commit.getAuthorIdent().getEmailAddress().strip().toLowerCase(Locale.ROOT);
         return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
                 .digest(normalized.getBytes(StandardCharsets.UTF_8)));
-    }
-
-    private static String subject(String value) {
-        String normalized = value == null ? "" : value.replace('\r', ' ').replace('\n', ' ').strip();
-        return normalized.length() <= 256 ? normalized : normalized.substring(0, 256);
     }
 
     private record FileChange(String file, int added, int deleted) { }

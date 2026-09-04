@@ -1,6 +1,11 @@
 package com.codeintel.infrastructure.git;
 
 import com.codeintel.application.ports.outbound.GitAnalysisPort;
+import com.codeintel.application.git.AnalyzeGitIntelligence;
+import com.codeintel.application.git.GetGitIntelligence;
+import com.codeintel.application.ports.outbound.AcquisitionRecordStore;
+import com.codeintel.application.ports.outbound.GitIntelligenceStore;
+import java.time.Clock;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,5 +27,16 @@ public class GitIntelligenceConfiguration {
     @Bean
     GitAnalysisPort gitAnalysisPort(GitIntelligenceLimits limits) {
         return new JGitIntelligenceAdapter(limits);
+    }
+
+    @Bean
+    AnalyzeGitIntelligence analyzeGitIntelligence(AcquisitionRecordStore acquisitions,
+            GitAnalysisPort analyzer, GitIntelligenceStore store) {
+        return new AnalyzeGitIntelligence(acquisitions, analyzer, store, Clock.systemUTC());
+    }
+
+    @Bean
+    GetGitIntelligence getGitIntelligence(GitIntelligenceStore store) {
+        return new GetGitIntelligence(store);
     }
 }

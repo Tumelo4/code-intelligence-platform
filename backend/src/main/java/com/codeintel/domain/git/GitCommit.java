@@ -3,11 +3,10 @@ package com.codeintel.domain.git;
 import java.time.Instant;
 import java.util.List;
 
-public record GitCommit(String sha, Instant authoredAt, String authorId, String subject,
-        List<String> changedFiles) {
+public record GitCommit(String sha, Instant authoredAt, String authorId, List<String> changedFiles) {
     public GitCommit {
         if (sha == null || !sha.matches("[0-9a-f]{40}") || authoredAt == null
-                || authorId == null || authorId.isBlank() || subject == null) {
+                || authorId == null || !authorId.matches("[0-9a-f]{64}")) {
             throw new IllegalArgumentException("git commit fields are invalid");
         }
         changedFiles = List.copyOf(changedFiles);
