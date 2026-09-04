@@ -8,7 +8,8 @@ public record FileHistory(String file, int commitCount, int linesAdded, int line
     public FileHistory {
         if (invalidRelativeFile(file)
                 || commitCount < 1 || linesAdded < 0 || linesDeleted < 0
-                || firstChangedAt == null || lastChangedAt == null || firstChangedAt.isAfter(lastChangedAt)) {
+                || firstChangedAt == null || lastChangedAt == null || firstChangedAt.isAfter(lastChangedAt)
+                || authors == null || authors.isEmpty()) {
             throw new IllegalArgumentException("file history fields are invalid");
         }
         authors = List.copyOf(authors);

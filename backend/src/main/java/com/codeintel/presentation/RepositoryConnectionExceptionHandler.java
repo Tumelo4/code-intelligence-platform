@@ -8,6 +8,8 @@ import com.codeintel.application.inventory.InventoryNotFoundException;
 import com.codeintel.application.inventory.InventoryValidationException;
 import com.codeintel.application.analysis.AnalysisNotFoundException;
 import com.codeintel.application.analysis.AnalysisValidationException;
+import com.codeintel.application.git.GitIntelligenceNotFoundException;
+import com.codeintel.application.git.GitIntelligenceValidationException;
 import java.time.Instant;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -68,6 +70,18 @@ public class RepositoryConnectionExceptionHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     ErrorResponse analysisRejected(AnalysisValidationException exception) {
         return new ErrorResponse("static_analysis_rejected", exception.getMessage(), Instant.now());
+    }
+
+    @ExceptionHandler(GitIntelligenceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    ErrorResponse gitIntelligenceNotFound(GitIntelligenceNotFoundException exception) {
+        return new ErrorResponse("git_intelligence_not_found", exception.getMessage(), Instant.now());
+    }
+
+    @ExceptionHandler(GitIntelligenceValidationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    ErrorResponse gitIntelligenceRejected(GitIntelligenceValidationException exception) {
+        return new ErrorResponse("git_intelligence_rejected", exception.getMessage(), Instant.now());
     }
 
     record ErrorResponse(String code, String message, Instant timestamp) {

@@ -14,7 +14,7 @@ class GitIntelligenceContractTest {
     @Test
     void snapshotsCollectionsAndAcceptsDotsInsideSafeFilenames() {
         var changedFiles = new ArrayList<>(List.of("src/name..part.java"));
-        var commit = new GitCommit(SHA, Instant.EPOCH, "author-1", "subject", changedFiles);
+        var commit = new GitCommit(SHA, Instant.EPOCH, "a".repeat(64), changedFiles);
         changedFiles.add("later.java");
 
         assertThat(commit.changedFiles()).containsExactly("src/name..part.java");
@@ -24,7 +24,7 @@ class GitIntelligenceContractTest {
 
     @Test
     void rejectsEscapingOrPlatformDependentPaths() {
-        assertThatThrownBy(() -> new GitCommit(SHA, Instant.EPOCH, "author-1", "subject",
+        assertThatThrownBy(() -> new GitCommit(SHA, Instant.EPOCH, "a".repeat(64),
                 List.of("../secret"))).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> new FileHistory("src\\Main.java", 1, 0, 0,
                 Instant.EPOCH, Instant.EPOCH, List.of()))
