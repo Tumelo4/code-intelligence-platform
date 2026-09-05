@@ -39,3 +39,9 @@
 | REQ-GIT-004 | git-intelligence.md, ADR-007 | TASK-GIT-003, TASK-GIT-006 | TEST-GIT-004 | milestone-07-2026-09-04.md |
 | REQ-GIT-005 | git-intelligence.md, ADR-007 | TASK-GIT-004, TASK-GIT-006, TASK-GIT-008 | TEST-GIT-004–005 | milestone-07-2026-09-04.md |
 | REQ-GIT-006 | git-intelligence.md | TASK-GIT-007–009 | TEST-GIT-006, TEST-GIT-008 | milestone-07-2026-09-04.md |
+| REQ-SCORE-001 | scoring.md, ADR-008 | TASK-SCORE-001, TASK-SCORE-004 | TEST-SCORE-005 | Pending Milestone 8 evidence |
+| REQ-SCORE-002 | scoring.md, ADR-008 | TASK-SCORE-001, TASK-SCORE-003–005 | TEST-SCORE-001–002 | Pending Milestone 8 evidence |
+| REQ-SCORE-003 | scoring.md, ADR-008 | TASK-SCORE-001, TASK-SCORE-003, TASK-SCORE-005 | TEST-SCORE-001–002 | Pending Milestone 8 evidence |
+| REQ-SCORE-004 | scoring.md, ADR-008 | TASK-SCORE-001, TASK-SCORE-003, TASK-SCORE-005 | TEST-SCORE-003 | Pending Milestone 8 evidence |
+| REQ-SCORE-005 | scoring.md, ADR-008 | TASK-SCORE-001, TASK-SCORE-003, TASK-SCORE-006 | TEST-SCORE-004–005 | Pending Milestone 8 evidence |
+| REQ-SCORE-006 | scoring.md | TASK-SCORE-007–009 | TEST-SCORE-006–007 | Pending Milestone 8 evidence |
