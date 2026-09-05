@@ -83,3 +83,13 @@ CREATE TABLE IF NOT EXISTS git_intelligence (
     PRIMARY KEY (repository_id, revision_kind, revision_value),
     CONSTRAINT git_intelligence_revision_kind CHECK (revision_kind = 'GIT_COMMIT')
 );
+
+CREATE TABLE IF NOT EXISTS repository_scoring (
+    repository_id UUID NOT NULL REFERENCES repository_connection(repository_id),
+    revision_kind TEXT NOT NULL,
+    revision_value TEXT NOT NULL,
+    report JSONB NOT NULL,
+    scored_at TIMESTAMPTZ NOT NULL,
+    PRIMARY KEY (repository_id, revision_kind, revision_value),
+    CONSTRAINT repository_scoring_revision_kind CHECK (revision_kind = 'GIT_COMMIT')
+);

@@ -10,6 +10,8 @@ import com.codeintel.application.analysis.AnalysisNotFoundException;
 import com.codeintel.application.analysis.AnalysisValidationException;
 import com.codeintel.application.git.GitIntelligenceNotFoundException;
 import com.codeintel.application.git.GitIntelligenceValidationException;
+import com.codeintel.application.scoring.ScoringNotFoundException;
+import com.codeintel.application.scoring.ScoringValidationException;
 import java.time.Instant;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -82,6 +84,18 @@ public class RepositoryConnectionExceptionHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     ErrorResponse gitIntelligenceRejected(GitIntelligenceValidationException exception) {
         return new ErrorResponse("git_intelligence_rejected", exception.getMessage(), Instant.now());
+    }
+
+    @ExceptionHandler(ScoringNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    ErrorResponse scoringNotFound(ScoringNotFoundException exception) {
+        return new ErrorResponse("repository_scoring_not_found", exception.getMessage(), Instant.now());
+    }
+
+    @ExceptionHandler(ScoringValidationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    ErrorResponse scoringRejected(ScoringValidationException exception) {
+        return new ErrorResponse("repository_scoring_rejected", exception.getMessage(), Instant.now());
     }
 
     record ErrorResponse(String code, String message, Instant timestamp) {

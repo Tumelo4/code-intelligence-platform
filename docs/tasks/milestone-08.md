@@ -6,6 +6,6 @@
 - [x] TASK-SCORE-004 — Implement exact-revision input validation and deterministic component normalization.
 - [x] TASK-SCORE-005 — Implement health, hotspot, and finding-priority calculation with stable ordering.
 - [x] TASK-SCORE-006 — Implement supported-type eligibility and complete reason codes.
-- [ ] TASK-SCORE-007 — Persist exact-revision scoring and expose a path-free, author-free API.
+- [x] TASK-SCORE-007 — Persist exact-revision scoring and expose a path-free, author-free API.
 - [ ] TASK-SCORE-008 — Test formulas, rounding, ordering, eligibility, safety, determinism, persistence, and API mapping.
 - [ ] TASK-SCORE-009 — Run Java 21 Compose verification and record runtime evidence.
