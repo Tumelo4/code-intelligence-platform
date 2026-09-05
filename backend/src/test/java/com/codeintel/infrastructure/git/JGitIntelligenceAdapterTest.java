@@ -101,6 +101,62 @@ class JGitIntelligenceAdapterTest {
                 .isInstanceOf(GitIntelligenceSafetyException.class);
     }
 
+    @Test
+    void failsClosedWhenChangedFileOrDiffByteLimitsAreExceeded() throws Exception {
+        Fixture fixture = fixture();
+
+        assertThatThrownBy(() -> new JGitIntelligenceAdapter(
+                new GitIntelligenceLimits(100, 1, 10_000, 1, 0, 100))
+                .analyze(fixture.original(), revision(fixture.head())))
+                .isInstanceOf(GitIntelligenceSafetyException.class)
+                .hasMessageContaining("changed-file limit");
+        assertThatThrownBy(() -> new JGitIntelligenceAdapter(
+                new GitIntelligenceLimits(100, 100, 1, 1, 0, 100))
+                .analyze(fixture.original(), revision(fixture.head())))
+                .isInstanceOf(GitIntelligenceSafetyException.class)
+                .hasMessageContaining("failed safely");
+    }
+
+    @Test
+    void rejectsSymbolicLinkHistoryAndNormalizesEquivalentAuthorIdentities() throws Exception {
+        Fixture fixture = fixture();
+        Path unsafeBundle = temporaryDirectory.resolve("unsafe-bundle");
+        Path original = Files.createDirectories(unsafeBundle.resolve("original"));
+        Files.createSymbolicLink(unsafeBundle.resolve("history.git"),
+                fixture.original().resolveSibling("history.git"));
+        var adapter = new JGitIntelligenceAdapter(
+                new GitIntelligenceLimits(100, 100, 10_000, 1, 0, 100));
+
+        assertThatThrownBy(() -> adapter.analyze(original, revision(fixture.head())))
+                .isInstanceOf(GitIntelligenceSafetyException.class)
+                .hasMessageContaining("unsafe");
+
+        Path seed = temporaryDirectory.resolve("authors-seed");
+        String head;
+        try (Git git = Git.init().setDirectory(seed.toFile()).call()) {
+            Files.writeString(seed.resolve("owned.txt"), "one\n");
+            git.add().addFilepattern(".").call();
+            git.commit().setMessage("one").setAuthor(" Alice ", "ALICE@EXAMPLE.COM")
+                    .setCommitter("Alice", "alice@example.com").call();
+            Files.writeString(seed.resolve("owned.txt"), "two\n");
+            git.add().addFilepattern(".").call();
+            head = git.commit().setMessage("two").setAuthor("alice", "alice@example.com")
+                    .setCommitter("Alice", "alice@example.com").call().getId().name();
+        }
+        Path authorBundle = temporaryDirectory.resolve("authors-bundle");
+        Files.createDirectories(authorBundle.resolve("original"));
+        try (Git ignored = Git.cloneRepository().setURI(seed.toUri().toString())
+                .setDirectory(authorBundle.resolve("history.git").toFile()).setBare(true).call()) {
+            var report = adapter.analyze(authorBundle.resolve("original"), revision(head));
+
+            assertThat(report.files()).singleElement().satisfies(history ->
+                    assertThat(history.authors()).singleElement().satisfies(author -> {
+                        assertThat(author.commits()).isEqualTo(2);
+                        assertThat(author.authorId()).matches("[0-9a-f]{64}");
+                    }));
+        }
+    }
+
     private Fixture fixture() throws Exception {
         Path seed = temporaryDirectory.resolve("seed");
         PersonIdent author = new PersonIdent("Alice", "alice@example.com");

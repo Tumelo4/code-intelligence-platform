@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved — implementation in progress.
+Verified — 2026-09-04. See `docs/evidence/milestone-07-2026-09-04.md`.
 
 ## Problem
 
