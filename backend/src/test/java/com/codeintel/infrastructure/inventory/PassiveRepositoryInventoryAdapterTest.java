@@ -34,7 +34,7 @@ class PassiveRepositoryInventoryAdapterTest {
 
         var report = adapter().inspect(temporary);
 
-        assertThat(report.languages()).containsExactly("JAVA");
+        assertThat(report.languages()).containsExactly("DOCKERFILE", "JAVA", "SHELL", "SQL");
         assertThat(report.buildSystems()).containsExactly("MAVEN");
         assertThat(report.paths().sourceRoots()).containsExactly("module/src/main/java", "src/main/java");
         assertThat(report.paths().testRoots()).containsExactly("module/src/test/java", "src/test/java");
@@ -119,6 +119,24 @@ class PassiveRepositoryInventoryAdapterTest {
         assertThatThrownBy(() -> adapter().inspect(temporary))
                 .isInstanceOf(InventorySafetyException.class)
                 .hasMessageContaining("symbolic link");
+    }
+
+    @Test
+    void discoversPolyglotLanguagesWithoutParsingOrExecutingTheirFiles() throws Exception {
+        Files.createDirectories(temporary.resolve("src"));
+        Files.writeString(temporary.resolve("src/main.tsx"), "not valid TypeScript");
+        Files.writeString(temporary.resolve("src/worker.py"), "not valid Python");
+        Files.writeString(temporary.resolve("src/service.go"), "not valid Go");
+        Files.writeString(temporary.resolve("src/native.cpp"), "not valid C++");
+        Files.writeString(temporary.resolve("src/lib.rs"), "not valid Rust");
+        Files.writeString(temporary.resolve("src/query.sql"), "not valid SQL");
+        Files.writeString(temporary.resolve("src/unknown.xyz"), "unknown text");
+
+        var report = adapter().inspect(temporary);
+
+        assertThat(report.languages()).containsExactly("C++", "GO", "PYTHON", "RUST", "SQL",
+                "TYPESCRIPT");
+        assertThat(report.inspectedFiles()).isEqualTo(7);
     }
 
     private PassiveRepositoryInventoryAdapter adapter() {

@@ -82,11 +82,8 @@ public final class PassiveRepositoryInventoryAdapter implements RepositoryInvent
                 if (!Files.isRegularFile(path, LinkOption.NOFOLLOW_LINKS) || ++count > limits.maximumFiles()) {
                     throw new InventorySafetyException("repository type or file count is unsafe");
                 }
-                if (lower.endsWith(".java")) languages.add("JAVA");
-                else if (lower.endsWith(".kt")) languages.add("KOTLIN");
-                else if (lower.endsWith(".js") || lower.endsWith(".jsx")) languages.add("JAVASCRIPT");
-                else if (lower.endsWith(".ts") || lower.endsWith(".tsx")) languages.add("TYPESCRIPT");
-                else if (lower.endsWith(".py")) languages.add("PYTHON");
+                String language = LanguageCatalog.detect(name);
+                if (language != null) languages.add(language);
                 if (lower.equals("pom.xml")) buildSystems.add("MAVEN");
                 else if (lower.startsWith("build.gradle") || lower.startsWith("settings.gradle")) {
                     buildSystems.add("GRADLE");

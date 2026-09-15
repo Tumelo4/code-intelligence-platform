@@ -4,7 +4,7 @@ A spec-driven platform for understanding, safely refactoring, and deterministica
 
 ## Milestone 1
 
-This repository currently contains the architecture foundation only: a Java 21/Spring Boot backend, a Next.js frontend, PostgreSQL, enforceable layered-package rules, and the specification/evidence needed to trace the milestone. Analysis, sandbox execution, LLM integration, and refactoring are intentionally not implemented yet.
+The Java 21/Spring Boot backend is the platform runtime, not a restriction on the languages it will analyze. The verified capabilities began with Java/Maven inventory and Java static findings; Git history is file-language-neutral. The current direction is polyglot: broad passive language discovery, then universal file-level evidence and language-specific analysis adapters. See [the polyglot analysis specification](docs/specs/06-features/polyglot-analysis.md). Sandbox execution, LLM integration, and refactoring remain later milestones.
 
 ## Prerequisites
 
