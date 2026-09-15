@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved direction — implementation in progress. Passive language discovery and exact-revision language-neutral file evidence are delivered through repository inventory; Git-history joins and parser-aware analysis remain pending.
+Approved direction — implementation in progress. Passive language discovery, exact-revision language-neutral file evidence, and a Git-history join are delivered; parser-aware analysis remains pending.
 
 ## Goal
 
@@ -31,6 +31,8 @@ This tiered model follows the distinction in [CodeScene's support guide](https:/
 Milestones 5–8 describe historically verified Java-first capabilities and should not be rewritten as polyglot evidence. Existing Java analysis API and stored reports remain compatible while a new language-neutral file report is introduced. Git intelligence is already file-language-neutral; its aggregation can be reused. The Java 21 backend runtime remains an implementation choice, not a limit on analyzed source languages.
 
 The inventory report now includes sorted `fileEvidence` entries: normalized relative file, detected language or `UNKNOWN`, byte count, UTF-8 physical line count, and `BASIC` or explicit exclusion status (`BINARY`, `TOO_LARGE`, `GENERATED`, `VENDORED`, `BUILD_OUTPUT`). Evidence is never derived by executing or parsing repository code. Existing stored inventory JSON without this field reads as an empty evidence list until reinventory runs.
+
+`GET /api/polyglot-evidence/{repositoryId}` returns these current-revision files joined by relative path to the separately stored Git intelligence report. Each row carries the available `FileHistory` (commit count, churn, authors) and coupling count/strongest strength, or a null history when none exists. The response includes `historyTruncated`; different acquisition revisions are rejected instead of silently mixing data. Git intelligence must be generated separately before requesting this join. Archive and local-snapshot acquisitions can still produce basic inventory evidence, but have no Git-history join without a Git intelligence report.
 
 ## Acceptance
 
