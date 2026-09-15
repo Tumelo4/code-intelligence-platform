@@ -16,8 +16,10 @@ public class InventoryConfiguration {
     InventoryLimits inventoryLimits(
             @Value("${repository.inventory.maximum-files:100000}") int maximumFiles,
             @Value("${repository.inventory.maximum-modules:500}") int maximumModules,
-            @Value("${repository.inventory.maximum-pom-bytes:2097152}") long maximumPomBytes) {
-        return new InventoryLimits(maximumFiles, maximumModules, maximumPomBytes);
+            @Value("${repository.inventory.maximum-pom-bytes:2097152}") long maximumPomBytes,
+            @Value("${repository.inventory.maximum-evidence-file-bytes:2097152}") long maximumEvidenceFileBytes) {
+        return new InventoryLimits(maximumFiles, maximumModules, maximumPomBytes,
+                maximumEvidenceFileBytes);
     }
 
     @Bean

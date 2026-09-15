@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved direction — implementation in progress. The first delivered slice broadens passive language discovery; universal file-level and parser-aware analysis remain pending.
+Approved direction — implementation in progress. Passive language discovery and exact-revision language-neutral file evidence are delivered through repository inventory; Git-history joins and parser-aware analysis remain pending.
 
 ## Goal
 
@@ -29,6 +29,8 @@ This tiered model follows the distinction in [CodeScene's support guide](https:/
 ## Migration boundary
 
 Milestones 5–8 describe historically verified Java-first capabilities and should not be rewritten as polyglot evidence. Existing Java analysis API and stored reports remain compatible while a new language-neutral file report is introduced. Git intelligence is already file-language-neutral; its aggregation can be reused. The Java 21 backend runtime remains an implementation choice, not a limit on analyzed source languages.
+
+The inventory report now includes sorted `fileEvidence` entries: normalized relative file, detected language or `UNKNOWN`, byte count, UTF-8 physical line count, and `BASIC` or explicit exclusion status (`BINARY`, `TOO_LARGE`, `GENERATED`, `VENDORED`, `BUILD_OUTPUT`). Evidence is never derived by executing or parsing repository code. Existing stored inventory JSON without this field reads as an empty evidence list until reinventory runs.
 
 ## Acceptance
 

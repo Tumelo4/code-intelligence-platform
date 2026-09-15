@@ -4,6 +4,7 @@ import com.codeintel.application.inventory.GetRepositoryInventory;
 import com.codeintel.application.inventory.InventoryRepository;
 import com.codeintel.domain.acquisition.AcquisitionRevision;
 import com.codeintel.domain.inventory.InventoryReport;
+import com.codeintel.domain.inventory.FileEvidence;
 import com.codeintel.domain.inventory.MavenProjectDescriptor;
 import com.codeintel.domain.inventory.RepositoryInventory;
 import com.codeintel.domain.inventory.RepositoryPathInventory;
@@ -45,13 +46,14 @@ public class RepositoryInventoryController {
     public record InventoryResponse(
             UUID repositoryId, AcquisitionRevision.Kind revisionKind, String revision,
             List<String> languages, List<String> buildSystems, RepositoryPathInventory paths,
-            List<MavenProjectDescriptor> mavenProjects, int inspectedFiles, Instant inventoriedAt) {
+            List<MavenProjectDescriptor> mavenProjects, int inspectedFiles,
+            List<FileEvidence> fileEvidence, Instant inventoriedAt) {
         static InventoryResponse from(RepositoryInventory inventory) {
             InventoryReport report = inventory.report();
             return new InventoryResponse(inventory.repositoryId().value(),
                     inventory.acquisitionRevision().kind(), inventory.acquisitionRevision().value(),
                     report.languages(), report.buildSystems(), report.paths(), report.mavenProjects(),
-                    report.inspectedFiles(), inventory.inventoriedAt());
+                    report.inspectedFiles(), report.fileEvidence(), inventory.inventoriedAt());
         }
     }
 }

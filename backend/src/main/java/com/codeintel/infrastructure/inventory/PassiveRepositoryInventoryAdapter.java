@@ -2,11 +2,16 @@ package com.codeintel.infrastructure.inventory;
 
 import com.codeintel.application.ports.outbound.RepositoryInventoryPort;
 import com.codeintel.domain.inventory.InventoryReport;
+import com.codeintel.domain.inventory.FileEvidence;
 import com.codeintel.domain.inventory.MavenPluginDescriptor;
 import com.codeintel.domain.inventory.MavenProjectDescriptor;
 import com.codeintel.domain.inventory.RepositoryPathInventory;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.StandardCharsets;
+import java.nio.charset.CodingErrorAction;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
@@ -51,11 +56,12 @@ public final class PassiveRepositoryInventoryAdapter implements RepositoryInvent
             MutablePaths categories = new MutablePaths();
             Set<String> languages = new LinkedHashSet<>();
             Set<String> buildSystems = new LinkedHashSet<>();
-            int fileCount = inspectFiles(root, categories, languages, buildSystems);
+            List<FileEvidence> evidence = new ArrayList<>();
+            int fileCount = inspectFiles(root, categories, languages, buildSystems, evidence);
             List<MavenProjectDescriptor> projects = inspectMaven(root, categories);
             if (!projects.isEmpty()) buildSystems.add("MAVEN");
             return new InventoryReport(sorted(languages), sorted(buildSystems), categories.freeze(),
-                    projects, fileCount);
+                    projects, fileCount, List.copyOf(evidence));
         } catch (InventorySafetyException exception) {
             throw exception;
         } catch (Exception exception) {
@@ -64,7 +70,7 @@ public final class PassiveRepositoryInventoryAdapter implements RepositoryInvent
     }
 
     private int inspectFiles(Path root, MutablePaths paths, Set<String> languages,
-            Set<String> buildSystems) throws IOException {
+            Set<String> buildSystems, List<FileEvidence> evidence) throws IOException {
         int count = 0;
         try (var stream = Files.walk(root)) {
             for (Path path : stream.sorted(Comparator.comparing(Path::toString)).toList()) {
@@ -83,7 +89,11 @@ public final class PassiveRepositoryInventoryAdapter implements RepositoryInvent
                     throw new InventorySafetyException("repository type or file count is unsafe");
                 }
                 String language = LanguageCatalog.detect(name);
-                if (language != null) languages.add(language);
+                FileEvidence file = fileEvidence(path, relative, language);
+                if (language != null && file.status() == FileEvidence.Status.BASIC) {
+                    languages.add(language);
+                }
+                evidence.add(file);
                 if (lower.equals("pom.xml")) buildSystems.add("MAVEN");
                 else if (lower.startsWith("build.gradle") || lower.startsWith("settings.gradle")) {
                     buildSystems.add("GRADLE");
@@ -92,6 +102,43 @@ public final class PassiveRepositoryInventoryAdapter implements RepositoryInvent
             }
         }
         return count;
+    }
+
+    private FileEvidence fileEvidence(Path path, String relative, String language) throws IOException {
+        long bytes = Files.size(path);
+        String label = language == null ? "UNKNOWN" : language;
+        FileEvidence.Status excluded = excludedStatus(relative);
+        if (excluded != null) return new FileEvidence(relative, label, bytes, 0, excluded);
+        if (bytes > limits.maximumEvidenceFileBytes()) {
+            return new FileEvidence(relative, label, bytes, 0, FileEvidence.Status.TOO_LARGE);
+        }
+        byte[] content = Files.readAllBytes(path);
+        if (content.length != bytes) {
+            throw new InventorySafetyException("repository file changed during inspection");
+        }
+        for (byte value : content) {
+            if (value == 0) return new FileEvidence(relative, label, bytes, 0, FileEvidence.Status.BINARY);
+        }
+        try {
+            String text = StandardCharsets.UTF_8.newDecoder()
+                    .onMalformedInput(CodingErrorAction.REPORT)
+                    .onUnmappableCharacter(CodingErrorAction.REPORT)
+                    .decode(ByteBuffer.wrap(content)).toString();
+            int lines = text.isEmpty() ? 0 : Math.toIntExact(text.chars().filter(ch -> ch == '\n').count()
+                    + (text.endsWith("\n") ? 0 : 1));
+            return new FileEvidence(relative, label, bytes, lines, FileEvidence.Status.BASIC);
+        } catch (CharacterCodingException exception) {
+            return new FileEvidence(relative, label, bytes, 0, FileEvidence.Status.BINARY);
+        }
+    }
+
+    private static FileEvidence.Status excludedStatus(String relative) {
+        for (String component : relative.toLowerCase(Locale.ROOT).split("/")) {
+            if (GENERATED.contains(component)) return FileEvidence.Status.GENERATED;
+            if (VENDORED.contains(component)) return FileEvidence.Status.VENDORED;
+            if (BUILD_OUTPUT.contains(component)) return FileEvidence.Status.BUILD_OUTPUT;
+        }
+        return null;
     }
 
     private List<MavenProjectDescriptor> inspectMaven(Path root, MutablePaths paths) throws Exception {
