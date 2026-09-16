@@ -45,6 +45,6 @@
 | REQ-SCORE-004 | scoring.md, ADR-008 | TASK-SCORE-001, TASK-SCORE-003, TASK-SCORE-005 | TEST-SCORE-003 | Pending Milestone 8 evidence |
 | REQ-SCORE-005 | scoring.md, ADR-008 | TASK-SCORE-001, TASK-SCORE-003, TASK-SCORE-006 | TEST-SCORE-004–005 | Pending Milestone 8 evidence |
 | REQ-SCORE-006 | scoring.md | TASK-SCORE-007–009 | TEST-SCORE-006–007 | Pending Milestone 8 evidence |
-| REQ-POLY-001 | polyglot-analysis.md | POLY-001–003 | Polyglot mixed-language inventory test | Pending polyglot evidence |
-| REQ-POLY-002–004 | polyglot-analysis.md | POLY-003–005 | Pending basic file-level tests | Pending polyglot evidence |
+| REQ-POLY-001 | polyglot-analysis.md | POLY-001–003 | PassiveRepositoryInventoryAdapterTest, PolyglotInventoryContractTest | polyglot-foundation-2026-09-16.md |
+| REQ-POLY-002–004 | polyglot-analysis.md | POLY-003–005 | PassiveRepositoryInventoryAdapterTest, PolyglotInventoryContractTest, GetGitJoinedFileEvidenceTest | polyglot-foundation-2026-09-16.md |
 | REQ-POLY-005–007 | polyglot-analysis.md | POLY-006–009 | Pending adapter, scoring, and Compose tests | Pending polyglot evidence |
