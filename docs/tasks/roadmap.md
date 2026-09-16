@@ -2,6 +2,8 @@
 
 Every milestone starts only after its feature spec is Approved and ends only after deterministic evidence and traceability are recorded.
 
+Polyglot analysis is now a cross-cutting priority: language-neutral evidence for all eligible text/code files comes first, with parser-based depth added per language. The verified Java-first milestones remain historical evidence, not the final product scope. See `docs/specs/06-features/polyglot-analysis.md` and `docs/tasks/polyglot-analysis.md`.
+
 | Order | Milestone | Immediate task outcome | State |
 |---:|---|---|---|
 | 1 | Architecture Foundation | Enforce layers; start backend, frontend, PostgreSQL | Verified |
@@ -12,6 +14,7 @@ Every milestone starts only after its feature spec is Approved and ends only aft
 | 6 | Static Analysis | Produce normalized metrics and findings through `StaticAnalyzerPort` | Verified |
 | 7 | Git Intelligence | Compute history, ownership, churn, and coupling | Verified |
 | 8 | Scoring | Calculate health, hotspots, priorities, and eligibility deterministically | In progress |
+| 8A | Polyglot Analysis | Universal file-level evidence verified; language-aware analyzer registration next | In progress |
 | 9 | Analysis Dashboard | Expose and render findings, evidence, and prioritization | Queued |
 | 10 | Safe Execution Broker | Validate policy and audit every command decision | Queued |
 | 11 | Docker Sandbox | Enforce isolation, limits, immutable original, and disabled network | Queued |

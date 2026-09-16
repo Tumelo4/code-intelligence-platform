@@ -1,5 +1,6 @@
 package com.codeintel.infrastructure.inventory;
 
+import com.codeintel.domain.inventory.FileEvidence;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ class PassiveRepositoryInventoryAdapterTest {
 
         var report = adapter().inspect(temporary);
 
-        assertThat(report.languages()).containsExactly("JAVA");
+        assertThat(report.languages()).containsExactly("DOCKERFILE", "JAVA", "SHELL", "SQL");
         assertThat(report.buildSystems()).containsExactly("MAVEN");
         assertThat(report.paths().sourceRoots()).containsExactly("module/src/main/java", "src/main/java");
         assertThat(report.paths().testRoots()).containsExactly("module/src/test/java", "src/test/java");
@@ -119,6 +120,54 @@ class PassiveRepositoryInventoryAdapterTest {
         assertThatThrownBy(() -> adapter().inspect(temporary))
                 .isInstanceOf(InventorySafetyException.class)
                 .hasMessageContaining("symbolic link");
+    }
+
+    @Test
+    void discoversPolyglotLanguagesWithoutParsingOrExecutingTheirFiles() throws Exception {
+        Files.createDirectories(temporary.resolve("src"));
+        Files.writeString(temporary.resolve("src/main.tsx"), "not valid TypeScript");
+        Files.writeString(temporary.resolve("src/worker.py"), "not valid Python");
+        Files.writeString(temporary.resolve("src/service.go"), "not valid Go");
+        Files.writeString(temporary.resolve("src/native.cpp"), "not valid C++");
+        Files.writeString(temporary.resolve("src/lib.rs"), "not valid Rust");
+        Files.writeString(temporary.resolve("src/query.sql"), "not valid SQL");
+        Files.writeString(temporary.resolve("src/unknown.xyz"), "unknown text");
+
+        var report = adapter().inspect(temporary);
+
+        assertThat(report.languages()).containsExactly("C++", "GO", "PYTHON", "RUST", "SQL",
+                "TYPESCRIPT");
+        assertThat(report.inspectedFiles()).isEqualTo(7);
+        assertThat(report.fileEvidence()).extracting(FileEvidence::file)
+                .containsExactly("src/lib.rs", "src/main.tsx", "src/native.cpp", "src/query.sql",
+                        "src/service.go", "src/unknown.xyz", "src/worker.py");
+        assertThat(report.fileEvidence()).filteredOn(value -> value.file().equals("src/unknown.xyz"))
+                .singleElement().satisfies(value -> {
+                    assertThat(value.language()).isEqualTo("UNKNOWN");
+                    assertThat(value.status()).isEqualTo(FileEvidence.Status.BASIC);
+                    assertThat(value.lines()).isEqualTo(1);
+                });
+    }
+
+    @Test
+    void classifiesBinaryOversizeAndExcludedPathsWithoutReadingThemAsCode() throws Exception {
+        Files.createDirectories(temporary.resolve("vendor"));
+        Files.createDirectories(temporary.resolve("target"));
+        Files.createDirectories(temporary.resolve("generated"));
+        Files.write(temporary.resolve("binary.bin"), new byte[] {1, 0, 2});
+        Files.writeString(temporary.resolve("large.py"), "123456789\n");
+        Files.writeString(temporary.resolve("vendor/lib.py"), "private\n");
+        Files.writeString(temporary.resolve("target/out.java"), "class Out {}\n");
+        Files.writeString(temporary.resolve("generated/model.ts"), "export {}\n");
+
+        var report = new PassiveRepositoryInventoryAdapter(
+                new InventoryLimits(100, 10, 100000, 8)).inspect(temporary);
+
+        assertThat(report.fileEvidence()).extracting(FileEvidence::status)
+                .containsExactly(FileEvidence.Status.BINARY, FileEvidence.Status.GENERATED,
+                        FileEvidence.Status.TOO_LARGE, FileEvidence.Status.BUILD_OUTPUT,
+                        FileEvidence.Status.VENDORED);
+        assertThat(report.fileEvidence()).allSatisfy(value -> assertThat(value.lines()).isZero());
     }
 
     private PassiveRepositoryInventoryAdapter adapter() {
